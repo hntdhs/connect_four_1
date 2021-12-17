@@ -1,9 +1,4 @@
-/** Connect Four
- *
- * Player 1 and 2 alternate turns. On each turn, a piece is dropped down a
- * column until a player gets four-in-a-row (horiz, vert, or diag) or until
- * board fills (tie)
- */
+
 
 const WIDTH = 7;
 const HEIGHT = 6;
@@ -49,12 +44,12 @@ function makeHtmlBoard() {
   }
 }
 
-/** findSpotForCol: given column x, return top empty y (null if filled) */
+// user clicks on top row in a column (which is the x), then this function looks for the first spot on the y axis in that column that's available, and returns null if all spots are filled
 
 function findSpotForCol(x) {
   for (let y = HEIGHT - 1; y >= 0; y--) {
     if (!board[y][x]) {
-      return y;
+      return y; // this is then to be used below on line 83 to place the piece
     }
   }
   return null;
@@ -94,7 +89,7 @@ function handleClick(evt) {
   board[y][x] = currPlayer;
   placeInTable(y, x);
 
-  // check for win
+  // checkForWin returns true, endGame
   if (checkForWin()) {
     return endGame(`Player ${currPlayer} won!`);
   }
@@ -126,7 +121,7 @@ function checkForWin() {
     );
   }
 
-  // This code examines the board and looks in all 4 directions to see if one player's game pieces in 4 consecutive divs. To do this, it starts with a spot on the y axis, then [1] defines what a win horizontally is by adding to the x axis by one 4 times, then [2] defines what a win vertically is by adding to the y axis by one 4 times, then [3] defines a win diagonally to the right by adding 1 to both axes 4 times, then [4] defines a win diagonally the other way by adding one to the y axis 4 times, but subtracting one from the x axis 4 times. 
+  // This code examines the board and looks in all 4 directions to see if one player's game pieces are placed in 4 consecutive divs. To do this, it starts with a spot on the y axis, then [1] defines what a win horizontally is by adding to the x axis by one 4 times, then [2] defines what a win vertically is by adding to the y axis by one 4 times, then [3] defines a win diagonally to the right by adding 1 to both axes 4 times, then [4] defines a win diagonally the other way by adding one to the y axis 4 times, but subtracting one from the x axis 4 times. 
 
   for (var y = 0; y < HEIGHT; y++) {
     for (var x = 0; x < WIDTH; x++) {
